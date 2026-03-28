@@ -25,12 +25,27 @@ const teamDiv = document.getElementById("team");
 const selectedBookEl = document.getElementById("selectedBook");
 const selectedGroupEl = document.getElementById("selectedGroup");
 
+function getSiteBasePath() {
+  const { pathname } = window.location;
+
+  if (pathname.endsWith("/")) {
+    return pathname;
+  }
+
+  const lastSlashIndex = pathname.lastIndexOf("/");
+  return `${pathname.slice(0, lastSlashIndex + 1)}`;
+}
+
+function buildSiteUrl(fileName) {
+  return `${window.location.origin}${getSiteBasePath()}${fileName}`;
+}
+
 window.goBack = function() {
-  window.location.href = "index.html";
+  window.location.href = buildSiteUrl("index.html");
 };
 
 if (!book || !group) {
-  window.location.href = "index.html";
+  window.location.href = buildSiteUrl("index.html");
 } else {
   selectedBookEl.textContent = book;
   selectedGroupEl.textContent = `${group} student${group > 1 ? "s" : ""}`;
@@ -120,6 +135,6 @@ if (!book || !group) {
     });
 
     alert("Allocation submitted successfully.");
-    window.location.href = "index.html";
+    window.location.href = buildSiteUrl("index.html");
   };
 }
