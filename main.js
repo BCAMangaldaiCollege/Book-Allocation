@@ -365,4 +365,3 @@ window.selectBook = function(name, group) {
   localStorage.setItem("group", group);
   window.location.href = buildSiteUrl("form.html");
 };
-
