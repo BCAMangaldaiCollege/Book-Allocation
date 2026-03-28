@@ -185,6 +185,21 @@ const availableBooksEl = document.getElementById("availableBooks");
 const selectedCountEl = document.getElementById("selectedCount");
 const remainingSeatsEl = document.getElementById("remainingSeats");
 
+function getSiteBasePath() {
+  const { pathname } = window.location;
+
+  if (pathname.endsWith("/")) {
+    return pathname;
+  }
+
+  const lastSlashIndex = pathname.lastIndexOf("/");
+  return `${pathname.slice(0, lastSlashIndex + 1)}`;
+}
+
+function buildSiteUrl(fileName) {
+  return `${window.location.origin}${getSiteBasePath()}${fileName}`;
+}
+
 const bookState = new Map(
   books.map((book) => [
     book.name,
@@ -348,5 +363,6 @@ onSnapshot(collection(db, "selections"), syncSelectionData);
 window.selectBook = function(name, group) {
   localStorage.setItem("book", name);
   localStorage.setItem("group", group);
-  window.location.href = "form.html";
+  window.location.href = buildSiteUrl("form.html");
 };
+
